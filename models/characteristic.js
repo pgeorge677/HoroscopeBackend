@@ -3,7 +3,7 @@ const {
     Model, DataTypes
 } = require('sequelize');
 const {
-    STRING, UUID, UUIDV4,
+    STRING, UUID, UUIDV4, BLOB
 } = DataTypes;
 
 module.exports = (sequelize, ignored) => {
@@ -13,7 +13,15 @@ module.exports = (sequelize, ignored) => {
         }
 
         toJSON() {
-            return {...this.get(), id: undefined, signId: undefined, createdAt: undefined, updatedAt: undefined}
+            return {
+                ...this.get(),
+                id: undefined,
+                symbolize: this.getDataValue('symbolize').toString('utf8'),
+                description: this.getDataValue('description').toString('utf8'),
+                signId: undefined,
+                createdAt: undefined,
+                updatedAt: undefined
+            }
         }
     }
 
@@ -23,7 +31,7 @@ module.exports = (sequelize, ignored) => {
                 defaultValue: UUIDV4
             },
             symbolize: {
-                type: STRING,
+                type: BLOB,
                 allowNull: false,
                 validate: {
                     notNull: {msg: 'Characteristic must have a symbolize'},
@@ -103,7 +111,7 @@ module.exports = (sequelize, ignored) => {
                 }
             },
             description: {
-                type: STRING,
+                type: BLOB,
                 allowNull: false,
                 validate: {
                     notNull: {msg: 'Characteristic must have a description'},

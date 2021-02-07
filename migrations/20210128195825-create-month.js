@@ -18,19 +18,19 @@ module.exports = {
       },
       description: {
         allowNull: false,
-        type: DataTypes["STRING"](2300)
+        type: DataTypes["BLOB"]("long")
       },
       love: {
         allowNull: false,
-        type: DataTypes["STRING"](2300)
+        type: DataTypes["BLOB"]("long")
       },
       work: {
         allowNull: false,
-        type: DataTypes["STRING"](2300)
+        type: DataTypes["BLOB"]("long")
       },
       heal: {
         allowNull: false,
-        type: DataTypes["STRING"](2300)
+        type: DataTypes["BLOB"]("long")
       },
       signId: {
         type: DataTypes["INTEGER"],

@@ -13,7 +13,17 @@ module.exports = (sequelize, ignored) => {
         }
 
         toJSON() {
-            return {...this.get(), id: undefined, signId: undefined, createdAt: undefined, updatedAt: undefined}
+            return {
+                ...this.get(),
+                id: undefined,
+                description: this.getDataValue('description').toString('utf8'),
+                love: this.getDataValue('love').toString('utf8'),
+                work: this.getDataValue('work').toString('utf8'),
+                heal: this.getDataValue('heal').toString('utf8'),
+                signId: undefined,
+                createdAt: undefined,
+                updatedAt: undefined
+            }
         }
     }
 

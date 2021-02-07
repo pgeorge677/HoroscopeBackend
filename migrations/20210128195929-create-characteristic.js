@@ -14,7 +14,7 @@ module.exports = {
             },
             symbolize: {
                 allowNull: false,
-                type: DataTypes["STRING"](1250)
+                type: DataTypes["BLOB"]("long")
             },
             element: {
                 allowNull: false,
@@ -54,7 +54,7 @@ module.exports = {
             },
             description: {
                 allowNull: false,
-                type: DataTypes["STRING"](2300)
+                type: DataTypes["BLOB"]("long")
             },
             signId: {
                 type: DataTypes["INTEGER"],

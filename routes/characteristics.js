@@ -22,6 +22,46 @@ router.post('/', async (req, res, ignored) => {
     }
 });
 
+router.post('/bulk', async (req, res, ignored) => {
+    const {signs} = req.body;
+    let json = {};
+    json.signs = [];
+    for (const currentSign of signs) {
+        const {sign, horoscope} = currentSign;
+        const {
+            symbolize, element,
+            season, character, positive, negative,
+            dayOfWeek, color, planet, perfume, description
+        } = horoscope;
+
+        try {
+            const signDb = await Sign.findOne({where: {name: sign}})
+            const horoscope = await Characteristic.create({
+                signId: signDb["id"],
+                symbolize,
+                element,
+                season,
+                character,
+                positive,
+                negative,
+                dayOfWeek,
+                color,
+                planet,
+                perfume,
+                description
+            });
+            json.signs.push({
+                sign,
+                horoscope
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(error);
+        }
+    }
+    return res.json(json);
+});
+
 router.get('/', async (req, res, ignored) => {
     try {
         const characteristics = await Characteristic.findAll({include: 'signs'});

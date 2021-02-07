@@ -18,7 +18,7 @@ module.exports = {
             },
             description: {
                 allowNull: false,
-                type: DataTypes["STRING"](2300)
+                type: DataTypes["BLOB"]("long")
             },
             signId: {
                 type: DataTypes["INTEGER"],
