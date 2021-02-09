@@ -1,11 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": "secret",
-    "database": "HoroscopeV2",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "port": 4306
+    "username": "b1d3dc42178874",
+    "password": "ad16d12f",
+    "database": "heroku_dd264b7b68e9273",
+    "host": "us-cdbr-east-03.cleardb.com",
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
@@ -15,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "b1d3dc42178874",
+    "password": "ad16d12f",
+    "database": "heroku_dd264b7b68e9273",
+    "host": "us-cdbr-east-03.cleardb.com",
     "dialect": "mysql"
   }
 }
