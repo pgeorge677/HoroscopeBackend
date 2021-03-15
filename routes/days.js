@@ -22,7 +22,12 @@ router.post('/bulk', async (req, res, ignored) => {
         const {title, description} = horoscope;
         try {
             const signDb = await Sign.findOne({where: {name: sign}})
-            const horoscope = await Day.save({signId: signDb["id"], title, description});
+            const dayDb = await Day.findOne({where: {signId: signDb["id"]}})
+            dayDb.signId = sign["id"];
+            dayDb.title = title;
+            dayDb.description = description;
+            const horoscope = await dayDb.save()
+
             json.signs.push({
                 sign,
                 horoscope
@@ -34,6 +39,61 @@ router.post('/bulk', async (req, res, ignored) => {
     }
     return res.json(json);
 });
+
+router.get('/sign', async (req, res, ignored) => {
+        const uuid = req.query.uuid;
+        const name = req.query.name;
+        try {
+            let sign;
+            const modelsIncluded = [
+                {
+                    model: Characteristic,
+                    as: 'characteristics',
+                    limit: 1,
+                    order: [['createdAt', 'DESC']]
+                },
+                {
+                    model: Day,
+                    as: 'days',
+                    limit: 1,
+                    order: [['createdAt', 'DESC']]
+                },
+                {
+                    model: Week,
+                    as: 'weeks',
+                    limit: 1,
+                    order: [['createdAt', 'DESC']]
+                },
+                {
+                    model: Month,
+                    as: 'months',
+                    limit: 1,
+                    order: [['createdAt', 'DESC']]
+                },
+                {
+                    model: Year,
+                    as: 'years',
+                    limit: 1,
+                    order: [['createdAt', 'DESC']]
+                }]
+            if (name) {
+                sign = await Sign.findOne({
+                    where: {name},
+                    include: modelsIncluded
+                });
+            } else {
+                sign = await Sign.findOne({
+                    where: {uuid},
+                    include: modelsIncluded
+                });
+            }
+            return res.json(sign)
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json(error)
+        }
+    }
+);
 
 router.get('/', async (req, res, ignored) => {
     try {
