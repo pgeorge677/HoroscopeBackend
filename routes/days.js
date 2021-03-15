@@ -22,7 +22,7 @@ router.post('/bulk', async (req, res, ignored) => {
         const {title, description} = horoscope;
         try {
             const signDb = await Sign.findOne({where: {name: sign}})
-            const horoscope = await Day.create({signId: signDb["id"], title, description});
+            const horoscope = await Day.save({signId: signDb["id"], title, description});
             json.signs.push({
                 sign,
                 horoscope
